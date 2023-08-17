@@ -10,16 +10,16 @@ jobs:
           docker login --username balo282 --password ${{ secrets.GH_TOKEN }} ghcr.io
       - name: Build Docker image
         run: |
-          docker build . -t ghcr.io/paduxe/helloworld-images:latest
+          docker build . -t ghcr.io/paduxe/helloworld-ui-images:latest
       - name: Push Docker image
         run: |
-          docker push ghcr.io/paduxe/helloworld-images:latest
-      - name: Create mnt folder and run docker compose
+          docker push ghcr.io/paduxe/helloworld-ui-images:latest
+      - name: Create mnt-ui folder and run docker compose
         run: |
-          mkdir -p /mnt/studydevops/
-          mv docker-compose.yml /mnt/studydevops/
+          mkdir -p /mnt-ui/studydevops/
+          mv docker-compose.yml /mnt-ui/studydevops/
           pwd
-          cd /mnt/studydevops/
+          cd /mnt-ui/studydevops/
           pwd
           ls -a
           docker ps
