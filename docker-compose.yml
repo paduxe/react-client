@@ -1,26 +1,10 @@
-name: project react ui cicd flow
-on: workflow_dispatch
-jobs:
-  build:
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
-      - name: Github login
-        run: |
-          docker login --username balo282 --password ${{ secrets.GH_TOKEN }} ghcr.io
-      - name: Build Docker image
-        run: |
-          docker build . -t ghcr.io/paduxe/helloworld-images:latest
-      - name: Push Docker image
-        run: |
-          docker push ghcr.io/paduxe/helloworld-images:latest
-      - name: Create mnt folder and run docker compose
-        run: |
-          mkdir -p /ui/studydevops/
-          mv docker-compose.yml /ui/studydevops/
-          pwd
-          cd /ui/studydevops/
-          pwd
-          ls -a
-          docker ps
-          docker-compose up -d
+version: '3.7'
+
+# Define services
+services:
+  # Frontend Service 
+  app-client:
+    build: .
+    ports:
+      - "8081:8081"
+    restart: always
