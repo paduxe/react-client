@@ -1,4 +1,4 @@
-name: project react client cicd flow
+name: project react ui cicd flow
 on: workflow_dispatch
 jobs:
   build:
@@ -10,16 +10,16 @@ jobs:
           docker login --username balo282 --password ${{ secrets.GH_TOKEN }} ghcr.io
       - name: Build Docker image
         run: |
-          docker build . -t ghcr.io/paduxe/react-ui-images:latest
+          docker build . -t ghcr.io/paduxe/helloworld-images:latest
       - name: Push Docker image
         run: |
-          docker push ghcr.io/paduxe/react-ui-images:latest
+          docker push ghcr.io/paduxe/helloworld-images:latest
       - name: Create mnt folder and run docker compose
         run: |
-          mkdir -p /mnt/react-ui/
-          mv docker-compose.yml /mnt/react-ui/
+          mkdir -p /mnt/studydevops/
+          mv docker-compose.yml /mnt/studydevops/
           pwd
-          cd /mnt/react-ui/
+          cd /mnt/studydevops/
           pwd
           ls -a
           docker ps
