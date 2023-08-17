@@ -1,4 +1,4 @@
-name: project cicd flow
+name: project react client cicd flow
 on: workflow_dispatch
 jobs:
   build:
