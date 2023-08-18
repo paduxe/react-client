@@ -1,29 +1,25 @@
-# Build docker image.
-# Sử dung node
-FROM node:12 as node
-
-# Khai báo tham số
-ARG workdir=.
-LABEL description="deploy react app"
-
-# Khái báo workdir trong node.
+# 1. For build React app
+FROM node:lts AS development
+# Set working directory
 WORKDIR /app
-
-# Copy project vào trong workdir của node.
-COPY ${workdir}/ /app/
-
-# Cài đặt các thư viện node liên quan.
-RUN npm install
-
-# Chạy lệnh build.
+#
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
+# Same as npm install
+RUN npm ci
+COPY . /app
+ENV CI=true
+CMD [ "npm", "start" ]
+FROM development AS build
 RUN npm run build
-
-# Sử dụng nginx
-FROM nginx:1.12
-# Copy folder đã được build vào folder chạy của nginx.
-COPY --from=node /app/build/ /var/www/dist/
-
-# Copy file cấu hình chạy cho nginx 
-COPY --from=node /app/nginx.conf /etc/nginx/nginx.conf
-
-CMD ["nginx", "-g", "daemon off;"]
+# 2. For Nginx setup
+FROM nginx:alpine
+# Copy config nginx
+COPY --from=build /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf ./*
+# Copy static assets from builder stage
+COPY --from=build /app/build .
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
