@@ -4,10 +4,7 @@ version: '3.7'
 services:
   # Frontend Service 
   app:
-    build: 
-      context: .
-        # Name of the dockerfile
-      dockerfile: Dockerfile
+    build: .
     container_name: react-container
     ports:
      # Host port:Container port
