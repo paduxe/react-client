@@ -3,9 +3,14 @@ version: '3.7'
 # Define services
 services:
   # Frontend Service 
-  app-client:
-    build:
+  app:
+    build: 
+      context: ./app
+        # Name of the dockerfile
       dockerfile: Dockerfile
+    container_name: react-container
     ports:
-      - "8081:8081"
-    restart: always
+     # Host port:Container port
+      - '8081:8081'
+    stdin_open: true
+    
