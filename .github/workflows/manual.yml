@@ -23,4 +23,5 @@ jobs:
           pwd
           ls -a
           docker ps
+          echo 'start docker compose up'
           docker-compose up -d
