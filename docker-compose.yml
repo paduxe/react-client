@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   app:
-    image: learning-docker/vue:v1
+    image: ghcr.io/paduxe/helloworld-ui-images:latest
     ports:
       - "8081:8081"
     restart: unless-stopped
