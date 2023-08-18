@@ -19,11 +19,11 @@ RUN npm install
 RUN npm run build
 
 # Sử dụng nginx
-FROM nginx:1.12
+#FROM nginx:1.12
 # Copy folder đã được build vào folder chạy của nginx.
-COPY --from=node /app/build/ /var/www/dist/
+#COPY --from=node /app/build/ /var/www/dist/
 
 # Copy file cấu hình chạy cho nginx 
-COPY --from=node /app/nginx.conf /etc/nginx/nginx.conf
+#COPY --from=node /app/nginx.conf /etc/nginx/nginx.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
