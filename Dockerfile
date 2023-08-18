@@ -11,7 +11,6 @@ COPY . /app
 ENV CI=true
 CMD [ "npm", "start" ]
 FROM development AS build
-RUN npm run build
 # 2. For Nginx setup
 FROM nginx:alpine
 # Copy config nginx
