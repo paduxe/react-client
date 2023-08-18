@@ -1,18 +1,36 @@
-# Fetching the latest node image on alpine linux
-FROM node:alpine AS development
+# Build docker image.
+# Sử dung node
+FROM node:12 as node
 
-# Declaring env
-ENV NODE_ENV development
+# Khai báo tham số
+ARG workdir=.
+LABEL description="deploy react app"
 
-# Setting up the work directory
-WORKDIR /react-app
+# Khái báo workdir trong node.
+WORKDIR /app
 
-# Installing dependencies
-COPY ./package.json /react-app
+# Copy project vào trong workdir của node.
+COPY ${workdir}/ /app/
+
+# Cài đặt các thư viện node liên quan.
 RUN npm install
 
-# Copying all the files in our project
-COPY . .
+# Chạy lệnh build.
+RUN npm run build
 
-# Starting our application
-CMD npm start
+# Sử dụng nginx
+FROM nginx:1.12
+# Copy folder đã được build vào folder chạy của nginx.
+COPY --from=node /app/build/ /var/www/dist/
+
+# Copy file cấu hình chạy cho nginx 
+COPY --from=node /app/nginx.conf /etc/nginx/nginx.conf
+
+# Cài đặt curl cho câu lệnh check HEALTH
+RUN apt-get update && apt-get install -y curl
+
+# Kiểm tra trạng thái của container sau khi chạy
+HEALTHCHECK --interval=1m --timeout=3s \
+  CMD curl -f http://localhost || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]
