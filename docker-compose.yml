@@ -5,7 +5,7 @@ services:
   # Frontend Service 
   app:
     build: 
-      context: ./app
+      context: ./studydevops
         # Name of the dockerfile
       dockerfile: Dockerfile
     container_name: react-container
