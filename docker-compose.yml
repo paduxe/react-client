@@ -1,13 +1,8 @@
-version: '3.7'
+version: "3.7"
 
-# Define services
 services:
-  # Frontend Service 
   app:
-    build: .
-    container_name: react-container
+    image: learning-docker/vue:v1
     ports:
-     # Host port:Container port
-      - '8081:8081'
-    stdin_open: true
-    
+      - "8081:8081"
+    restart: unless-stopped
