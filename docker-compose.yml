@@ -5,4 +5,3 @@ services:
     image: ghcr.io/paduxe/helloworld-ui-images:latest
     ports:
       - "8081:8081"
-    restart: unless-stopped

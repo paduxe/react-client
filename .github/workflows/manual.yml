@@ -4,6 +4,7 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+#      - directory after checkout /root/actions-runner/_work/studydevops/studydevops
       - uses: actions/checkout@v3
       - name: Build react
         run: |
