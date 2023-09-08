@@ -10,7 +10,7 @@ jobs:
           npm install
       - name: Github login
         run: |
-          docker login --username balo282 --password ${{ secrets.GH_TOKEN }} ghcr.io
+          docker login --username paduxe --password ${{ secrets.GH_TOKEN }} ghcr.io
       - name: Build Docker image
         run: |
           docker build . -t ghcr.io/paduxe/helloworld-ui-images:latest
